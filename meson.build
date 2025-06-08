@@ -14,12 +14,20 @@ root_inc = include_directories('.')
 
 printf_subproject = subproject('printf')
 
-libprintf_dep = printf_subproject.get_variable('libprintf_dep')
 
 openlibm_subproject = subproject('openlibm')
+
+#introduce unit test
+cmocka_subproject = subproject('cmocka')
+
+libprintf_dep = printf_subproject.get_variable('libprintf_dep')
 # Add the new openlibm dependency. Meson will use the .wrap file to find it.
 openlibm_dep = openlibm_subproject.get_variable('openlibm_dep')
 
+cmocka_dep = cmocka_subproject.get_variable('cmocka_dep')
+
+
 # Tell meson to navigate to subdirectory 
 subdir('src')
+subdir('test')
 
