@@ -250,9 +250,10 @@ arch_specific_includes = include_directories('../arch/x86_64/include')
 
 libprintf_dep = printf_subproject.get_variable('libprintf_dep')
 
+#TODO: Explain the + for common and native files
 libc_native = static_library('c_native',
   libc_common_files + libc_native_files,
-  include_directories: [libc_includes, arch_specific_includes],
-  dependencies: libprintf_dep,
+  include_directories: [libc_includes, arch_specific_includes, inc, root_inc],
+  dependencies: [libprintf_dep, openlibm_dep]
 )
 
