@@ -197,21 +197,21 @@ string_files = files(
 
 #Ability to group files used by all libc targets 
 libc_common_files = [
-	# assert_files,
+	assert_files,
 	ctype_files,
 	locale_files,
-	# math_files,
-	# stdio_files,
+	math_files,
+	stdio_files,
 	stdlib_files,
 	string_files,
 	support_files,
-	# time_files,
+	time_files,
 	wchar_files,
 ]
 
 # These files are used to compile libc for a build machine / your personal computer
 libc_native_files = files(
-	# 'stdio/putchar_native.c',
+	'stdio/putchar_native.c',
 )
 
 # These files are used when cross-compiling libc for another platform
@@ -244,17 +244,15 @@ libgdtoa = static_library('gdtoa',
 	c_args: gdtoa_compiler_flags, # New Addition
 )
 
-libc_common_files = files(
-   'ctype/isalnum.c',
-   'ctype/isalpha.c',
-   'ctype/isascii.c',
- )
 
 #To address include errors, you need to simply use include_directories to include the directory that possesses the header file.
 arch_specific_includes = include_directories('../arch/x86_64/include')
 
+libprintf_dep = printf_subproject.get_variable('libprintf_dep')
+
 libc_native = static_library('c_native',
   libc_common_files + libc_native_files,
   include_directories: [libc_includes, arch_specific_includes],
+  dependencies: libprintf_dep,
 )
 
